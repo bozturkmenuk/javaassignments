@@ -5,6 +5,7 @@
  */
 package com.fractal.api;
 
+import com.fractal.api.v1.domain.TransactionListDTO;
 import com.fractal.model.Transaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -50,23 +51,9 @@ public interface GetcategorizedtransactionsApi {
     @ApiOperation(value = "get all transactions by a given category", nickname = "getCategorizedTransactionsById", notes = "Get all transactions with a given category Id", response = Transaction.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "search results", response = Transaction.class, responseContainer = "List") })
-    @RequestMapping(value = "/getcategorizedtransactions",
+    @RequestMapping(value = "/getcategorizedtransactions/{categoryId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Transaction>> getCategorizedTransactionsById(@ApiParam(value = "Category Id"  )  @Valid @RequestBody Long categoryId) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-            if (getAcceptHeader().get().contains("application/json")) {
-                try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"date\" : \"14.11.2019 08:30:00 GMT+3\",  \"quantity\" : 12.99,  \"currency\" : \"GBP\",  \"id\" : \"aaere4x0\",  \"category\" : \"Travel\"}, {  \"date\" : \"14.11.2019 08:30:00 GMT+3\",  \"quantity\" : 12.99,  \"currency\" : \"GBP\",  \"id\" : \"aaere4x0\",  \"category\" : \"Travel\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-                } catch (IOException e) {
-                    log.error("Couldn't serialize response for content type application/json", e);
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default GetcategorizedtransactionsApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
+    public ResponseEntity<TransactionListDTO> getCategorizedTransactionsById(@ApiParam(value = "Category Id",required=true) @PathVariable("categoryId") Integer categoryId) ;
 
 }

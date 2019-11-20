@@ -13,6 +13,10 @@ import com.fractal.repositories.TransactionRepository;
 public class DataLoader implements CommandLineRunner {
 private CategoriesRepository categoriesRepository;
 private TransactionRepository transactionRepository;
+private  Integer CATEGORY_ID_TRAVEL;
+private  Integer CATEGORY_ID_COFFEE;
+private  Integer CATEGORY_ID_GROCERIES;
+private  Integer CATEGORY_ID_RESTAURANTS;
 	
 	public DataLoader(CategoriesRepository categoriesRepository, TransactionRepository transactionRepository) {
 	this.categoriesRepository = categoriesRepository;
@@ -22,18 +26,27 @@ private TransactionRepository transactionRepository;
 	@Override
 	public void run(String... args) throws Exception {
 		
-		  categoriesRepository.save(new Category("Travel"));
-		  categoriesRepository.save(new Category("Coffee"));
-		  categoriesRepository.save(new Category("Groceries"));
-		  categoriesRepository.save(new Category("Restaurants"));
+		
+		  CATEGORY_ID_TRAVEL= categoriesRepository.save(new
+		  Category("Travel")).getId().intValue(); CATEGORY_ID_COFFEE=
+		  categoriesRepository.save(new Category("Coffee")).getId().intValue();
+		  CATEGORY_ID_GROCERIES = categoriesRepository.save(new
+		  Category("Groceries")).getId().intValue(); CATEGORY_ID_RESTAURANTS =
+		  categoriesRepository.save(new Category("Restaurants")).getId().intValue();
 		  
 		  
-		  transactionRepository.save(new Transaction("Travel", "14.11.2019 22:30:00", new BigDecimal("14.00"), "GBP"));
-		  transactionRepository.save(new Transaction("Coffee", "16.11.2019 22:30:00", new BigDecimal("2.99"), "GBP"));
-		  transactionRepository.save(new Transaction("Groceries","14.11.2019 22:30:00", new BigDecimal("14.00"), "GBP"));
-		  transactionRepository.save(new Transaction("Coffee", "18.11.2019 22:30:00", new BigDecimal("3.29"), "GBP"));
-		  transactionRepository.save(new Transaction("Travel", "18.11.2019 22:30:00", new BigDecimal("34.99"), "GBP"));
-
+		  transactionRepository.save(new Transaction(null,CATEGORY_ID_TRAVEL,
+		  "14.11.2019 22:30:00", new BigDecimal("14.00"), "GBP"));
+		  transactionRepository.save(new Transaction(null,CATEGORY_ID_COFFEE,
+		  "16.11.2019 22:30:00", new BigDecimal("2.99"), "GBP"));
+		  transactionRepository.save(new
+		  Transaction(null,CATEGORY_ID_GROCERIES,"14.11.2019 22:30:00", new
+		  BigDecimal("14.00"), "GBP")); transactionRepository.save(new
+		  Transaction(null,CATEGORY_ID_COFFEE, "18.11.2019 22:30:00", new
+		  BigDecimal("3.29"), "GBP")); transactionRepository.save(new
+		  Transaction(null,CATEGORY_ID_TRAVEL, "18.11.2019 22:30:00", new
+		  BigDecimal("34.99"), "GBP"));
+		 
 	}
 
 }

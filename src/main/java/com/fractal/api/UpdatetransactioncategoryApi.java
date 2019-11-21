@@ -5,7 +5,7 @@
  */
 package com.fractal.api;
 
-import com.fractal.model.Transaction;
+import com.fractal.api.v1.domain.PatchOnlyTransactionCategoryDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import javax.validation.constraints.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-11-17T22:51:11.563Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-11-20T22:10:17.054Z")
 
 @Api(value = "updatetransactioncategory", description = "the updatetransactioncategory API")
 public interface UpdatetransactioncategoryApi {
@@ -51,17 +51,10 @@ public interface UpdatetransactioncategoryApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Transaction updated"),
         @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 409, message = "given categorr not exists!") })
+        @ApiResponse(code = 409, message = "given category not exists!") })
     @RequestMapping(value = "/updatetransactioncategory",
-        produces = { "application/json" }, 
         consumes = { "application/json" },
-        method = RequestMethod.POST)
-    default ResponseEntity<Void> updateTransactionCategory(@ApiParam(value = "updated transaction"  )  @Valid @RequestBody Transaction category) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default UpdatetransactioncategoryApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
+        method = RequestMethod.PATCH)
+    public ResponseEntity<Void> updateTransactionCategory(@ApiParam(value = ""  )  @Valid @RequestBody PatchOnlyTransactionCategoryDTO updatePatch) ;
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fractal.api.v1.domain.TransactionDTO;
 import com.fractal.api.v1.mapper.TransactionMapper;
+import com.fractal.model.Transaction;
 import com.fractal.repositories.TransactionRepository;
 @Service
 @Primary
@@ -27,6 +28,18 @@ public class TransactionServiceImpl implements TransactionService {
 				.stream()
 				.map(transactionMapper::transactionToTransactionDTO)
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public TransactionDTO getTransactionById(Long transactionId) {
+		return  transactionMapper.transactionToTransactionDTO(transactionRepository.getOne(transactionId));
+	}
+
+	@Override
+	public void UpdateTransactionCategory(Long transactionId, Integer newCategoryId) {
+		Transaction transaction = transactionRepository.getOne(transactionId);
+		transaction.setCategory(newCategoryId);
+		transactionRepository.save(transaction);
 	}
 	
 	

@@ -3,7 +3,6 @@ package com.fractal.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.fractal.api.v1.domain.CategoryDTO;

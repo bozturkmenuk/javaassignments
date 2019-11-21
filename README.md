@@ -13,6 +13,9 @@ mapstruct for DTOs. ( distinguish api models from inner entities.)
 # Running:
 ./mvnw spring-boot:run in main folder.
 
+for database login : http://localhost:8080/bozturkmenuk/assignment/1.0.0/h2-console (just leave the credentials as is)
+postman importable swagger file with example data is in importforpostman.json file on the root folder of repository
+
 # Packages & Purposes :
 
 com.fractal.api : generated from yaml(design-first) . edited default methods and converted to interface methods. interfaces with suffix api are annotated for swaggerui. classes extend them with suffix controller are the handler methods. 

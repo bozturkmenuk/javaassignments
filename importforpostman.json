@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "ccb3bf2d-f2f9-4041-8acd-ff7e1fe3ed88",
+		"name": "Fractal Categories API",
+		"description": "Fractal Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "updatetransactioncategory",
+			"item": [
+				{
+					"name": "update a given transaction's category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patchrequest\": {\n        \"newcategoryId\": 4\n    }\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}/bozturkmenuk/assignment/1.0.0/updatetransactioncategory/:transactionId",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bozturkmenuk",
+								"assignment",
+								"1.0.0",
+								"updatetransactioncategory",
+								":transactionId"
+							],
+							"variable": [
+								{
+									"key": "transactionId",
+									"value": "6"
+								}
+							]
+						},
+						"description": "update a given transaction's category."
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for updatetransactioncategory"
+		},
+		{
+			"name": "getcategorizedtransactions",
+			"item": [
+				{
+					"name": "get all transactions by a given category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/getcategorizedtransactions/:categoryId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bozturkmenuk",
+								"assignment",
+								"1.0.0",
+								"getcategorizedtransactions",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Get all transactions with a given category Id"
+					},
+					"response": [
+						{
+							"name": "get transactions by category example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/getcategorizedtransactions/:categoryId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bozturkmenuk",
+										"assignment",
+										"1.0.0",
+										"getcategorizedtransactions",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 20:54:44 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactions\": [\n        {\n            \"id\": 6,\n            \"category\": 2,\n            \"date\": \"16.11.2019 22:30:00\",\n            \"quantity\": 2.99,\n            \"currency\": \"GBP\"\n        },\n        {\n            \"id\": 8,\n            \"category\": 2,\n            \"date\": \"18.11.2019 22:30:00\",\n            \"quantity\": 3.29,\n            \"currency\": \"GBP\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Folder for getcategorizedtransactions"
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "list available categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bozturkmenuk",
+								"assignment",
+								"1.0.0",
+								"categories"
+							]
+						},
+						"description": "Get all Categories defined in system"
+					},
+					"response": []
+				},
+				{
+					"name": "adds a new category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"yenisi\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bozturkmenuk",
+								"assignment",
+								"1.0.0",
+								"categories"
+							]
+						},
+						"description": "Adds a category to the system"
+					},
+					"response": [
+						{
+							"name": "adds category example 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Toys\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bozturkmenuk",
+										"assignment",
+										"1.0.0",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 20:44:21 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "add category example 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Cosmetics\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/bozturkmenuk/assignment/1.0.0/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bozturkmenuk",
+										"assignment",
+										"1.0.0",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 20:42:25 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "Folder for categories"
+		}
+	]
+}

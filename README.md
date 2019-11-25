@@ -3,17 +3,20 @@ Spring Boot rest API with swagger.
 
 Swagger Service configuration(yaml file) attached in the root folder.
 
-Used libraries & dependencies: 
+# Used libraries & dependencies: 
 
 h2 in memory database
 lombok for getter,setter,and additional functions. 
 swagger & swagger ui for api documentation. 
 mapstruct for DTOs. ( distinguish api models from inner entities.)
 
-Running:
+# Running:
 ./mvnw spring-boot:run in main folder.
 
-Packages & Purposes :
+for database login : http://localhost:8080/bozturkmenuk/assignment/1.0.0/h2-console (just leave the credentials as is)
+postman importable swagger file with example data is in importforpostman.json file on the root folder of repository
+
+# Packages & Purposes :
 
 com.fractal.api : generated from yaml(design-first) . edited default methods and converted to interface methods. interfaces with suffix api are annotated for swaggerui. classes extend them with suffix controller are the handler methods. 
 

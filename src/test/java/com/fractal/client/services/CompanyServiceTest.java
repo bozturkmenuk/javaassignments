@@ -23,14 +23,6 @@ public class CompanyServiceTest {
 	AuthenticationService authenticationService;
 	@Autowired
 	CompanyService companyService;
-	
-	
-
-
-	
-	
-
-
 
 	@Test
 	public void getAllCompanies() {

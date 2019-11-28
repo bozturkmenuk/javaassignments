@@ -14,22 +14,110 @@
 package com.fractal.client.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Arrays;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Company array
- */
 @ApiModel(description = "Company array")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-11-25T14:00:22.971Z")
-@Data
-public class Companies extends ArrayList<Company> {/**
-	 * 
-	 */
+public class Companies extends ArrayList<Company> {
+	 @JsonProperty("links")
+	  private TransactionsLinks links = null;
+
+	  @JsonProperty("results")
+	  private List<Company> results = null;
+
+	  public Companies links(TransactionsLinks links) {
+	    this.links = links;
+	    return this;
+	  }
+
+	   /**
+	   * Get links
+	   * @return links
+	  **/
+	  @ApiModelProperty(value = "")
+	  public TransactionsLinks getLinks() {
+	    return links;
+	  }
+
+	  public void setLinks(TransactionsLinks links) {
+	    this.links = links;
+	  }
+
+	  public Companies results(List<Company> results) {
+	    this.results = results;
+	    return this;
+	  }
+
+	  public Companies addResultsItem(Company resultsItem) {
+	    if (this.results == null) {
+	      this.results = new ArrayList<Company>();
+	    }
+	    this.results.add(resultsItem);
+	    return this;
+	  }
+
+	   /**
+	   * Get results
+	   * @return results
+	  **/
+	  @ApiModelProperty(value = "")
+	  public List<Company> getResults() {
+	    return results;
+	  }
+
+	  public void setResults(List<Company> results) {
+	    this.results = results;
+	  }
+
+
+	  @Override
+	  public boolean equals(java.lang.Object o) {
+	    if (this == o) {
+	      return true;
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	      return false;
+	    }
+	    Companies companies = (Companies) o;
+	    return Objects.equals(this.links, companies.links) &&
+	        Objects.equals(this.results, companies.results);
+	  }
+
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(links, results);
+	  }
+
+
+	  @Override
+	  public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("class Companies {\n");
+	    
+	    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+	    sb.append("    results: ").append(toIndentedString(results)).append("\n");
+	    sb.append("}");
+	    return sb.toString();
+	  }
+
+	  /**
+	   * Convert the given object to string with each line indented by 4 spaces
+	   * (except the first line).
+	   */
+	  private String toIndentedString(java.lang.Object o) {
+	    if (o == null) {
+	      return "null";
+	    }
+	    return o.toString().replace("\n", "\n    ");
+	  }
 
 }
 

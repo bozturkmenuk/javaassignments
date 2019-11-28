@@ -1,8 +1,12 @@
 package com.fractal.client.services;
 
-import com.fractal.client.FractalSandboxApi;
+import org.springframework.stereotype.Service;
 
+import com.fractal.client.FractalSandboxApi;
+import com.fractal.client.model.TransactionsResponse;
+@Service
 public interface BankService {
-	FractalSandboxApi apiclient = new FractalSandboxApi();
+	
+	public TransactionsResponse getBankTransactions(String bankId,String accountId,String companyId,String pg,String from,String to);
 	
 }

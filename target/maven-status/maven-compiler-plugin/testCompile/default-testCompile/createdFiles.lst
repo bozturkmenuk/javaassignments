@@ -1,0 +1,5 @@
+com\fractal\client\services\AuthenticationServiceTest.class
+com\fractal\client\services\TransactionServiceTests.class
+com\fractal\client\services\CompanyServiceTest.class
+com\fractal\client\services\BankingServiceTest.class
+com\fract\FractalassessmentApplicationTests.class

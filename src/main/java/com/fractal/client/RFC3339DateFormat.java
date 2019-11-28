@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.fractal.client.invoke;
+package com.fractal.client;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;

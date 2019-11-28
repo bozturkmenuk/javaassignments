@@ -1,4 +1,4 @@
-package com.fractal.client.invoke;
+package com.fractal.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,13 +50,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
-import com.fractal.client.auth.Authentication;
-import com.fractal.client.auth.HttpBasicAuth;
-import com.fractal.client.auth.ApiKeyAuth;
-import com.fractal.client.auth.OAuth;
+import com.fractal.client.service.impl.AuthenticationServiceImplApiKey;
+import com.fractal.client.services.AuthenticationService;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-11-25T13:59:04.199Z")
-@Component("com.fractaal.api.client.invoker.ApiClient")
+@Component("com.fractaal.api.client.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
@@ -75,23 +73,24 @@ public class ApiClient {
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
     
-    private String basePath = "https://sandbox.askfractal.com/token";
+    private String basePath = "https://sandbox.askfractal.com/";
 
     private RestTemplate restTemplate;
 
-    private Map<String, Authentication> authentications;
+    private Map<String, AuthenticationService> authentications;
 
     private HttpStatus statusCode;
     private MultiValueMap<String, String> responseHeaders;
     
     private DateFormat dateFormat;
 
+    @Autowired
     public ApiClient() {
         this.restTemplate = buildRestTemplate();
         init();
     }
     
-    @Autowired
+    
     public ApiClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         init();
@@ -109,10 +108,10 @@ public class ApiClient {
         setUserAgent("Java-SDK");
 
         // Setup authentications (key: authentication name, value: authentication).
-        authentications = new HashMap<String, Authentication>();
-        authentications.put("api_key", new ApiKeyAuth("header", "x-api-key"));
+        authentications = new HashMap<String, AuthenticationService>();
+        authentications.put("api_key", new AuthenticationServiceImplApiKey("header", "x-api-key"));
         // Prevent the authentications from being modified.
-        authentications = Collections.unmodifiableMap(authentications);
+       // authentications = Collections.unmodifiableMap(authentications);
     }
     
     /**
@@ -153,7 +152,7 @@ public class ApiClient {
      * Get authentications (key: authentication name, value: authentication).
      * @return Map the currently configured authentication types
      */
-    public Map<String, Authentication> getAuthentications() {
+    public Map<String, AuthenticationService> getAuthentications() {
         return authentications;
     }
 
@@ -163,36 +162,8 @@ public class ApiClient {
      * @param authName The authentication name
      * @return The authentication, null if not found
      */
-    public Authentication getAuthentication(String authName) {
+    public AuthenticationService getAuthentication(String authName) {
         return authentications.get(authName);
-    }
-
-    /**
-     * Helper method to set username for the first HTTP basic authentication.
-     * @param username the username
-     */
-    public void setUsername(String username) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof HttpBasicAuth) {
-                ((HttpBasicAuth) auth).setUsername(username);
-                return;
-            }
-        }
-        throw new RuntimeException("No HTTP basic authentication configured!");
-    }
-
-    /**
-     * Helper method to set password for the first HTTP basic authentication.
-     * @param password the password
-     */
-    public void setPassword(String password) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof HttpBasicAuth) {
-                ((HttpBasicAuth) auth).setPassword(password);
-                return;
-            }
-        }
-        throw new RuntimeException("No HTTP basic authentication configured!");
     }
 
     /**
@@ -200,41 +171,13 @@ public class ApiClient {
      * @param apiKey the API key
      */
     public void setApiKey(String apiKey) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKey(apiKey);
+        for (AuthenticationService auth : authentications.values()) {
+            if (auth instanceof AuthenticationServiceImplApiKey) {
+                ((AuthenticationServiceImplApiKey) auth).setApiKey(apiKey);
                 return;
             }
         }
         throw new RuntimeException("No API key authentication configured!");
-    }
-
-    /**
-     * Helper method to set API key prefix for the first API key authentication.
-     * @param apiKeyPrefix the API key prefix
-     */
-    public void setApiKeyPrefix(String apiKeyPrefix) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
-                return;
-            }
-        }
-        throw new RuntimeException("No API key authentication configured!");
-    }
-
-    /**
-     * Helper method to set access token for the first OAuth2 authentication.
-     * @param accessToken the access token
-     */
-    public void setAccessToken(String accessToken) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof OAuth) {
-                ((OAuth) auth).setAccessToken(accessToken);
-                return;
-            }
-        }
-        throw new RuntimeException("No OAuth2 authentication configured!");
     }
 
     /**
@@ -507,9 +450,14 @@ public class ApiClient {
      * @param returnType The return type into which to deserialize the response
      * @return The response body in chosen type
      */
-    public <T> T invokeAPI(String path, HttpMethod method, MultiValueMap<String, String> queryParams, Object body, HttpHeaders headerParams, MultiValueMap<String, Object> formParams, List<MediaType> accept, MediaType contentType, String[] authNames, ParameterizedTypeReference<T> returnType) throws RestClientException {
-        updateParamsForAuth(authNames, queryParams, headerParams);
+    public <T> T  invokeAPI(String path, HttpMethod method, MultiValueMap<String, String> queryParams, Object body, HttpHeaders headerParams, MultiValueMap<String, Object> formParams, List<MediaType> accept, MediaType contentType, String[] authNames, ParameterizedTypeReference<T> returnType) throws RestClientException {
+       // authentications.put(path.replace("/","") + "SandboxAuthorizer", new AuthenticationServiceImplApiKey( "header","Authorization"));
+
+    	authentications.put("bankSandboxAuthorizer", new AuthenticationServiceImplApiKey( "header","Authorization"));
+    	
+    	updateParamsForAuth(authNames, queryParams, headerParams);
         
+       
         final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(basePath).path(path);
         if (queryParams != null) {
             builder.queryParams(queryParams);
@@ -529,7 +477,6 @@ public class ApiClient {
         RequestEntity<Object> requestEntity = requestBuilder.body(selectBody(body, formParams, contentType));
 
         ResponseEntity<T> responseEntity = restTemplate.exchange(requestEntity, returnType);
-        
         statusCode = responseEntity.getStatusCode();
         responseHeaders = responseEntity.getHeaders();
 
@@ -539,7 +486,7 @@ public class ApiClient {
             if (returnType == null) {
                 return null;
             }
-            return responseEntity.getBody();
+            return  responseEntity.getBody();
         } else {
             // The error handler built into the RestTemplate should handle 400 and 500 series errors.
             throw new RestClientException("API returned " + statusCode + " and it wasn't handled by the RestTemplate error handler");
@@ -592,7 +539,7 @@ public class ApiClient {
      */
     private void updateParamsForAuth(String[] authNames, MultiValueMap<String, String> queryParams, HttpHeaders headerParams) {
         for (String authName : authNames) {
-            Authentication auth = authentications.get(authName);
+            AuthenticationService auth = authentications.get(authName);
             if (auth == null) {
                 throw new RestClientException("Authentication undefined: " + authName);
             }

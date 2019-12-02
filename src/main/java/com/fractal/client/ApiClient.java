@@ -110,6 +110,7 @@ public class ApiClient {
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, AuthenticationService>();
         authentications.put("api_key", new AuthenticationServiceImplApiKey("header", "x-api-key"));
+        
         // Prevent the authentications from being modified.
        // authentications = Collections.unmodifiableMap(authentications);
     }
@@ -451,9 +452,8 @@ public class ApiClient {
      * @return The response body in chosen type
      */
     public <T> T  invokeAPI(String path, HttpMethod method, MultiValueMap<String, String> queryParams, Object body, HttpHeaders headerParams, MultiValueMap<String, Object> formParams, List<MediaType> accept, MediaType contentType, String[] authNames, ParameterizedTypeReference<T> returnType) throws RestClientException {
-       // authentications.put(path.replace("/","") + "SandboxAuthorizer", new AuthenticationServiceImplApiKey( "header","Authorization"));
-
-    	authentications.put("bankSandboxAuthorizer", new AuthenticationServiceImplApiKey( "header","Authorization"));
+    	
+    	authentications.put("authorizer", new AuthenticationServiceImplApiKey( "header","Authorization"));
     	
     	updateParamsForAuth(authNames, queryParams, headerParams);
         

@@ -1,5 +1,6 @@
 package com.fractal.client.services;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public interface CategoriesService {
 	
 	public Transactions getTransactionsByCompany(String companyId,String from,String to,String pg);
 	
-	public CategoriesPut categorizeTransactionsByDefinition(TransactionsResponse transactions);
+	public CategoriesPut categorizeTransactionsByDefinition(HashMap<String, String> categorykeywords, TransactionsResponse transactions);
+	
+	public String extractTransactionId(String text,int startOffset);
+	
+	public String combineDescriptions(TransactionsResponse transactions) ;
 
 }

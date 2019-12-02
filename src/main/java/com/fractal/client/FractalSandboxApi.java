@@ -1,6 +1,7 @@
 package com.fractal.client;
 
 import com.fractal.client.model.TransactionsResponse;
+import com.fractal.client.model.CategoriesPut;
 import com.fractal.client.model.Categories;
 import com.fractal.client.model.Companies;
 import com.fractal.client.model.Company;
@@ -110,7 +111,7 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "companySandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         ParameterizedTypeReference<Company> returnType = new ParameterizedTypeReference<Company>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
@@ -185,7 +186,7 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "categoriesSandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         ParameterizedTypeReference<Categories> returnType = new ParameterizedTypeReference<Categories>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
@@ -226,7 +227,7 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "companiesSandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         ParameterizedTypeReference<Companies> returnType = new ParameterizedTypeReference<Companies>() {};
         apiClient.setDebugging(true);
@@ -319,7 +320,7 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "companySandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         ParameterizedTypeReference<Company> returnType = new ParameterizedTypeReference<Company>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
@@ -347,7 +348,7 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "categoriesSandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         ParameterizedTypeReference<Categories> returnType = new ParameterizedTypeReference<Categories>() {};
         apiClient.setDebugging(true);
@@ -395,10 +396,43 @@ public class FractalSandboxApi {
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
-        String[] authNames = new String[] { "api_key", "bankSandboxAuthorizer" };
+        String[] authNames = new String[] { "api_key", "authorizer" };
 
         apiClient.setDebugging(true);
         ParameterizedTypeReference<TransactionsResponse> returnType = new ParameterizedTypeReference<TransactionsResponse>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    
+    public void updateTransactionCategory(CategoriesPut categoriesPut) throws RestClientException {
+        Object postBody = categoriesPut;
+        
+        // verify the required parameter 'categoriesPut' is set
+        if (categoriesPut == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'categoriesPut' when calling transactionsPut");
+        }
+        
+        String path = UriComponentsBuilder.fromPath("/categories/transactions").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+        
+        headerParams.add("X-Api-Key", apiClient.parameterToString(authenticationService.getApiKey()));
+        headerParams.add("X-Partner-Id", apiClient.parameterToString(authenticationService.getPartnerId()));
+        headerParams.add("Authorization","Bearer " + apiClient.parameterToString(authenticationService.getBearerToken()));
+
+        final String[] accepts = { 
+            "application/json"
+        };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { 
+            "application/json", "application/x-www-form-urlencoded"
+        };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] { "api_key", "authorizer" };
+
+        ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
+        apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
 }
